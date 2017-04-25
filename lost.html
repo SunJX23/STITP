@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>lost</title>
+	<link href="./css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="./styles/lost.css">
+	<link rel="stylesheet" href="./js/jquery-3.1.1.min.js">
+	<link rel="stylesheet" href="./js/bootstrap.min.js">
+	<meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+</head>
+<body>
+	<form action="lost.php" method="post" enctype="multipart/form-data">
+		<div class="head">
+			<p>Lost</p>
+		</div>
+		<div class="face">
+				<span class="glyphicon glyphicon-bookmark" style="color:#FFD306;font-size:25px" ></span>
+				<select name="name" id="chose" class="form-control" >
+					<option value="" disabled="disabled" selected="selected">关键字</option>
+					<option value="饭卡">饭卡</option>
+					<option value="钱包">钱包</option>
+					<option value="杯子">杯子</option>
+					<option value="U盘">U盘</option>
+					<option value="书本">书本</option>
+					<option value="文具">文具</option>
+					<option value="手机">手机</option>
+					<option value="钥匙">钥匙</option>
+					<option value="其他">其他</option>
+				</select>
+			<div class="card form-group has-warning" name="card" style="display:none">
+				<input type="text" name="cardn" class="form-control" placeholder="姓名" id="inputWarning1">
+				<input type="text" name="cardc" class="form-control" placeholder="卡号">
+			</div>
+				<select name="place" id="" class="form-control">
+					<option value="" disabled="disabled" selected="selected">地点</option>
+					<option value="教一">教一</option>
+					<option value="教二">教二</option>
+					<option value="教三">教三</option>
+					<option value="教四">教四</option>
+					<option value="教五">教五</option>
+					<option value="图书馆">图书馆</option>
+					<option value="南操">南操</option>
+					<option value="北操">北操</option>
+					<option value="大活">大活</option>
+					<option value="其他">其他</option>
+					<option value="未知">我不知道</option>
+				</select>
+			<div class="place form-group has-warning">
+				<input type="text" class="form-control" name="deplace" placeholder="具体地点">
+			</div>
+			<label style="font-size:17px">时间：
+				<select name="datey" id="year" style="background:#fff;font-size:13px"></select>
+				<select name="datem" id="month" style="background:#fff;font-size:13px"></select>
+				<select name="dated" id="day" style="background:#fff;font-size:13px"></select>
+			</label><br>
+			<div class="form-group has-warning">
+				<input type="text" name="detail" class="form-control" placeholder="特征">
+				<input type="text" name="contact" class="form-control" placeholder="联系方式">
+			</div>
+			<button type="button"  class="upload" id="upload">上传图片</button>&nbsp;<span id="upload_tips"></span>
+			<input type="file" name="file" id="upload_none" style="display:none"/>
+		</div>
+		<button class="submit"><span class="glyphicon glyphicon-ok" style="font-size:25px"></span></button>
+		<!-- <input type="submit" name="" class="submit"> -->
+	</form>
+	<script src="js/bootstrap.min.js"></script>
+	<script>
+		var mydate=new Date();
+		var year=mydate.getFullYear();
+		var selectY=document.getElementById('year');
+		var selectM=document.getElementById('month');
+		var selectD=document.getElementById('day');
+		var chose=document.getElementById('chose');
+		document.getElementById('chose').addEventListener("change",function(e){
+			if(e.target.value=='饭卡'){
+				document.getElementsByName("card")[0].style.display="block";
+			}
+			else{
+				document.getElementsByName("card")[0].style.display="none";
+			}
+		});
+
+		// -----添加文件选中弹出事件
+
+		document.getElementById('upload_none').addEventListener("change",function(e){
+			var name=e.target.files[0].name;
+			alert('您选中了文件名为 ' +e.target.files[0].name+ ' 的文件,点击提交后完成上传。');
+			document.querySelector('#upload_tips').innerHTML = name;
+		});
+
+		// -----end-----
+
+		for(var i=0;i<2;i++){
+			var option=document.createElement('option');
+			option.innerHTML=year;
+			selectY.appendChild(option);
+			year--;
+		}
+		for(i=1;i<13;i++){
+			var option=document.createElement('option');
+			option.innerHTML=i;
+			selectM.appendChild(option);
+		}
+		for(i=1;i<32;i++){
+			var option=document.createElement('option');
+			option.innerHTML=i;
+			selectD.appendChild(option);
+		}	
+
+		var upload=document.getElementById('upload');
+		var upload_none=document.getElementById('upload_none');
+		upload.addEventListener("click",function(e){
+			e.stopPropagation();
+			upload_none.click();
+			return false;
+		},false);
+
+	</script>
+</body>
+</html>
