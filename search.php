@@ -80,7 +80,7 @@
 					</div>
 					<div class="search">
 						    <div class="input-group">
-						      <input type="text" class="form-control">
+						      <input type="text" name="text" onkeyup="showHint(this.value)" class="form-control">
 						      <span class="input-group-btn">
 						        <button class="btn btn-default" type="button">Go!</button>
 						      </span>
@@ -189,7 +189,7 @@
 ?> 
 				<figure class="">
 					<div class="img">
-						<img src="<?php echo $xinxi['gImage'] ?>" max-height="150px" alt="">
+						<img src=<?php echo "thumpimg.php?path=".$xinxi['gImage']?> max-height="150px" alt="">
 					</div>
 					<div class="details">
 						<p>物品：<?php echo $sname ?></p>
@@ -209,7 +209,7 @@
 ?>
 				<figure class="">
 					<div class="img">
-						<img src="<?php echo $xinxi['gImage'] ?>" max-height="150px" alt="">
+						<img src=<?php echo "thumpimg.php?path=".$xinxi['gImage']?> max-height="150px" alt="">
 					</div>
 					<div class="details">
 						<p>物品：<?php echo $sname ?></p>
