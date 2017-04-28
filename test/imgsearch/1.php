@@ -6,14 +6,10 @@
 	$histogram = array_fill_keys(range(0,255), 0);
 	foreach ($image -> getImageHistogram() as $pixel) {
 		$rgb = $pixel -> getColor();
-		echo "</br>rgb is :</br>";
-		var_dump($rgb);
 		$histogram[$rgb['r']] += $pixel -> getColorCount();
 		$histogram[$rgb['g']] += $pixel -> getColorCount();
 		$histogram[$rgb['b']] += $pixel -> getColorCount();
 	}
-	echo "</br>histogram is :<br>";
-	var_dump($histogram);
 	$max = max($histogram);
 	$threshold = ($image -> getImageWidth() * $image -> getImageHeight())/256 * 12;
 	if($max > $threshold)
@@ -32,7 +28,7 @@
 	}
 	$image -> setImageFormat('png');
 	$image -> writeImage('histogram.png');
-	//echo $image;
+	echo $image;
 	$image -> clear();
 	$image -> destroy();
 ?>

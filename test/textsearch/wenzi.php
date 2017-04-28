@@ -12,18 +12,25 @@
 			$query = mysqli_query($con,$sql);
 			if($query){
 				while($row = mysqli_fetch_array($query)){
+
+					$maytext = $row{$searchtext};
 					if($row[0] == "饭卡" && $searchtext == "gDetail"){
 						if(preg_match('/^[\x{4e00}-\x{9fa5}]+$/u', $text)>0){
 							if(substr($row[1],0,2) == 'CN' && !in_array(substr($row[1],2), $maybetexts))
-								$maybetexts[] = substr($row[1],2);
+								$maytext = substr($row[1],2);
 							else if(substr($row[1],17,2) == 'CN' && !in_array(substr($row[1],19), $maybetexts))
-								$maybetexts[] = substr($row[1],19);
+								$maytext = substr($row[1],19);
 						}
 						else if(substr($row[1],0,2) == 'CC' && !in_array(substr($row[1],2,15), $maybetexts)){
-							$maybetexts[] = substr($row[1],2,15);
+							$maytext = substr($row[1],2,15);
 						}
-					}else if(!in_array($row{$searchtext}, $maybetexts))
-						$maybetexts[] = $row{$searchtext};
+					}else if(mb_strlen($maytext,"utf8") > 6 ){
+						
+					}
+					
+					if(!in_array($maytext, $maybetexts)){
+						$maybetexts[] = $maytext;
+					}
 				}
 			}
 		}
