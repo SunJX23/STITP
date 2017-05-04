@@ -4,27 +4,28 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
 	<title>搜索词自动完成</title> 
 	<style type="text/css"> 
-	#search{ 
-		text-align: center; 
-		position:relative; 
-	} 
-	.autocomplete{ 
-		border: 1px solid #9ACCFB; 
-		background-color: white; 
-		text-align: left; 
-	} 
-	.autocomplete li{ 
-		list-style-type: none; 
-	} 
-	.clickable { 
-		cursor: default; 
-	} 
-	.highlight { 
-		background-color: #9ACCFB; 
-	} 
+		#search{ 
+			text-align: center; 
+			position:relative; 
+		} 
+		.autocomplete{ 
+			border: 1px solid #9ACCFB; 
+			background-color: white; 
+			text-align: left; 
+		} 
+		.autocomplete li{ 
+			list-style-type: none; 
+		} 
+		.clickable { 
+			cursor: default; 
+		} 
+		.highlight { 
+			background-color: #9ACCFB; 
+		} 
 	</style> 
-<!-- <script type="text/javascript" src="jquery.js"></script>  -->
-<script type="text/javascript"> 
+	<script type="text/javascript" src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js">
+	</script> 
+	<script type="text/javascript"> 
 	$(function(){ 
 		//取得div层 
 		var $search = $('#search'); 
@@ -34,14 +35,14 @@
 		$searchInput.attr('autocomplete','off'); 
 		//创建自动完成的下拉列表，用于显示服务器返回的数据,插入在搜索按钮的后面，等显示的时候再调整位置 
 		var $autocomplete = $('<div class="autocomplete"></div>') 
-		.hide() 
+		.hide();
 		.insertAfter('#submit'); 
-		//清空下拉列表的内容并且隐藏下拉列表区 
+			//清空下拉列表的内容并且隐藏下拉列表区 
 		var clear = function(){ 
 			$autocomplete.empty().hide(); 
 		}; 
 		//注册事件，当输入框失去焦点的时候清空下拉列表并隐藏 
-		$searchInput.blur(function(){
+		$searchInput.blur(function(){ 
 			setTimeout(clear,500); 
 		}); 
 		//下拉列表中高亮的项目的索引，当显示下拉列表项的时候，移动鼠标或者键盘的上下键就会移动高亮的项目，想百度搜索那样 
@@ -63,15 +64,15 @@
 			$autocomplete.find('li').removeClass('highlight') 
 			.eq(selectedItem).addClass('highlight'); 
 		}; 
-		var ajax_request = function(){
+		var ajax_request = function(){ 
 			//ajax服务端通信 
 			$.ajax({ 
-				'url':'a.jsp', //服务器的地址 
-				'data':{'search-text':$searchInput.val()}, //参数 
-				'dataType':'json', //返回数据类型 
-				'type':'POST', //请求类型 
-				'success':function(data){ 
-					if(data.length){ 
+				url:"a.jsp", //服务器的地址 
+				data:{'search-text':$searchInput.val()}, //参数 
+				dataType:"json", //返回数据类型 
+				type:"POST", //请求类型 
+				success:function(data){ 
+					if(data.length) { 
 						//遍历data，添加到自动完成区 
 						$.each(data, function(index,term) { 
 							//创建li标签,添加到下拉列表中 
@@ -115,8 +116,7 @@
 				//首先删除下拉列表中的信息 
 				$autocomplete.empty().hide(); 
 				clearTimeout(timeoutid); 
-				timeoutid = setTimeout(ajax_request,100); 
-			} 
+				timeoutid = setTimeout(ajax_request,100); 			} 
 			else if(event.keyCode == 38){ 
 				//上 
 				//selectedItem = -1 代表鼠标离开 
@@ -124,7 +124,7 @@
 					setSelectedItem($autocomplete.find('li').length-1); 
 				} 
 				else { 
-				//索引减1 
+					//索引减1 
 					setSelectedItem(selectedItem - 1); 
 				} 
 				event.preventDefault(); 
@@ -149,10 +149,10 @@
 				if($autocomplete.find('li').length == 0 || selectedItem == -1) { 
 					return; 
 				} 
-				$searchInput.val($autocomplete.find('li').eq(selectedItem).text()); 
-				$autocomplete.empty().hide(); 
-				event.preventDefault(); 
-			}
+			$searchInput.val($autocomplete.find('li').eq(selectedItem).text()); 
+			$autocomplete.empty().hide(); 
+			event.preventDefault(); 
+			} 
 		}) 
 		.keydown(function(event){ 
 			//esc键 
@@ -169,12 +169,14 @@
 			$autocomplete.css({'position':'relative','left':xpos + "px",'top':ypos +"px"}); 
 		}); 
 	}); 
-</script> 
+	</script> 
 </head> 
 <body> 
-<div id = "search"> 
-<label for="search-text">请输入关键词</label><input type="text" id="search-text" name="search-text" /> 
-<input type="button" id="submit" value="搜索"/> 
-</div> 
+	<div id = "search"> 
+		<label for="search-text">请输入关键词</label>
+		<input type="text" id="search-text" name="search-text" />
+		<p><span id="txtHint"></span></p>
+		<input type="button" id="submit" value="搜索"/> 
+	</div> 
 </body> 
 </html>

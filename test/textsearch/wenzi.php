@@ -24,10 +24,13 @@
 						else if(substr($row[1],0,2) == 'CC' && !in_array(substr($row[1],2,15), $maybetexts)){
 							$maytext = substr($row[1],2,15);
 						}
-					}else if(mb_strlen($maytext,"utf8") > 6 ){
-						
+					}else {
+						if(mb_strlen($maytext,"utf8") > 6 ){
+							$index = strpos($maytext,$text);
+							$x = substr($maytext, $index, 18);
+							$maytext = $x."...";
+						}
 					}
-					
 					if(!in_array($maytext, $maybetexts)){
 						$maybetexts[] = $maytext;
 					}
