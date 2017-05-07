@@ -52,8 +52,10 @@
 		}
 	}
 
-	foreach ($maybetexts as $value) {
-		echo $value."</br>";
-	}
+	// foreach ($maybetexts as $value) {
+	// 	echo $value."</br>";
+	// }
+	header('Content-type', 'application/json');
+	echo json_encode($maybetexts);
 
 ?>

@@ -19,7 +19,7 @@
 	$con = mysqli_connect(HOST,USERNAME,PASSWORD,DB);
 	$con -> set_charset("utf8");
 
-	$text = $_POST['text'];
+	$text = $_POST['text'] ? $_POST['text'] : null;
 	$result = array();
 	$except = "";
 

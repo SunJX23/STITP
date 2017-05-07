@@ -5,39 +5,47 @@
 	<title>search</title>
 	<script>
 	function showHint(str)
-	{
-		if (str.length==0)
-		{ 
-			document.getElementById("txtHint").innerHTML="";
-			return;
-		}
-		if (window.XMLHttpRequest)
+	{	
+		var request = new XMLHttpRequest();
+		request.open("GET","wenzi.php?text="+str,true);
+		request.responseType = 'json';
+		request.send();
+		request.onreadystatechange=function()
 		{
-			// IE7+, Firefox, Chrome, Opera, Safari 浏览器执行的代码
-			xmlhttp=new XMLHttpRequest();
-		}
-		else
-		{	
-			//IE6, IE5 浏览器执行的代码
-			xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-		}
-		xmlhttp.onreadystatechange=function()
-		{
-			if (xmlhttp.readyState==4 && xmlhttp.status==200)
+			if (request.readyState==4 && request.status==200)
 			{
-				document.getElementById("txtHint").innerHTML=xmlhttp.responseText;
+				removeAllChild("t");
+				createDT(this.response,"dt","t");
 			}
 		}
-		xmlhttp.open("GET","wenzi.php?text="+str,true);
-		xmlhttp.send();
 	}
+
+	function createDT(text,table,id){
+		for(var i=0; i<text.length; i++){
+			var ele = document.createElement(table);
+			var node = document.createTextNode(text[i]);
+			ele.appendChild(node);
+			var element = document.getElementById(id);
+			element.appendChild(ele);
+		}
+	}
+
+    function removeAllChild(id) {  
+        var div = document.getElementById(id);
+        //console.log(div);
+        //if(div.hasChildNodes())
+        while (div.hasChildNodes()) { //当div下还存在子节点时 循环继续  
+            div.removeChild(div.firstChild);   
+        }  
+    }
 	</script>
 </head>
 <body>
 <form action="wenzisearch.php" method="post" enctype="multipart/form-data">
 	请输入关键字：<input type="text" name="text" onkeyup="showHint(this.value)" >
 	<button  class="submit">搜索</button>
-	<p>您可能想查询：</br></br><span id="txtHint"></span></p>
+	<dl>您可能想查询：</br></dl>
+	<dt id = "t"></dt>
 </form>
 </body>
 </html>
